@@ -1,0 +1,19 @@
+---
+metadata:
+  name: "Ensure that database keys are encrypted with CMK"
+  id: "CKV2_AWS_1"
+  category: "ENCRYPTION"
+definition:
+  and:
+  - cond_type: "attribute"
+    resource_types:
+    - "aws_dynamodb_table"    
+    attribute: "server_side_encryption.kms_key_arn"
+    operator: "equals"
+    value: "default key"
+  - cond_type: "attribute"
+    resource_types:
+    - "aws_s3_bucket_policy"    
+    attribute: "policy"
+    operator: "contains"
+    value: "\"aws:SecureTransport\": \"false\""
